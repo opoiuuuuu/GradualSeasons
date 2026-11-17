@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>GradualSeasons</AssemblyName>
+    <RootNamespace>GradualSeasons</RootNamespace>
+    <Version>1.1.1</Version>
+    <TargetFramework>net6.0</TargetFramework>
+    <LangVersion>10.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+
+    <!-- Stardew Valley 1.6 runs on .NET 6. Newer .NET SDKs warn that net6.0 is out of support (NETSDK1138);
+         that warning doesn't apply to game mods, so turn the check off. -->
+    <CheckEolTargetFramework>false</CheckEolTargetFramework>
+
+    <!-- ModBuildConfig 4.4 includes an optional code analyzer that needs a newer C# compiler (Roslyn 4.9+, from the
+         .NET 8+ SDK) than the .NET 6 SDK has. On the .NET 6 SDK that analyzer is simply skipped and the compiler
+         warns CS9057 about it; the mod builds exactly the same either way, so hide that one warning. -->
+    <NoWarn>$(NoWarn);CS9057</NoWarn>
+
+    <!-- This mod doesn't use Harmony. -->
+    <EnableHarmony>false</EnableHarmony>
+  </PropertyGroup>
+
+  <!-- Where the game is installed. ModBuildConfig auto-detects the default Steam/GOG folders; this game is on
+       another drive, so point it there. The condition means the line is simply ignored on a PC that doesn't
+       have that folder (then ModBuildConfig falls back to auto-detection). Change the path if you move the game. -->
+  <PropertyGroup Condition="Exists('E:\steam\steamapps\common\Stardew Valley\Stardew Valley.dll')">
+    <GamePath>E:\steam\steamapps\common\Stardew Valley</GamePath>
+  </PropertyGroup>
+
+  <!-- A Release build also makes the ready-to-share mod zip (the mod folder, ready to unzip into Mods) in the
+       release folder next to the solution. -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <ModZipPath>$(MSBuildProjectDirectory)\..\release</ModZipPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Pathoschild.Stardew.ModBuildConfig" Version="4.4.0" />
+  </ItemGroup>
+
+  <!-- Copy the sprite sheet next to the DLL so ModBuildConfig deploys it into Mods/GradualSeasons/assets. -->
+  <ItemGroup>
+    <None Update="assets\**\*" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,16 @@
+{
+  "Name": "Gradual Seasons",
+  "Author": "opoiuuuu",
+  "Version": "1.1.1",
+  "Description": "Seasons blend into each other: in the last week of a season the next one creeps in (snow settling on the map, trees and roofs, fall colours spreading, the spring thaw, and the weather), and a little of the old season lingers into the new one.",
+  "UniqueID": "opoiuuuu.GradualSeasons",
+  "EntryDll": "GradualSeasons.dll",
+  "MinimumApiVersion": "4.0.0",
+  "UpdateKeys": [ "Nexus:55595" ],
+  "Dependencies": [
+    {
+      "UniqueID": "spacechase0.GenericModConfigMenu",
+      "IsRequired": false
+    }
+  ]
+}
